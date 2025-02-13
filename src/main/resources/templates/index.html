@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Translate Text</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Translate Text</h3>
+                </div>
+                <div class="card-body">
+                    <form id="translateForm">
+                        <div class="mb-3">
+                            <label for="text" class="form-label">Enter Text</label>
+                            <textarea class="form-control" id="text" name="text" rows="4"
+                                      placeholder="Type here..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sourceLang" class="form-label">Source Language</label>
+                            <select class="form-control" id="sourceLang" name="sourceLang">
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                                <option value="zh">Chinese</option>
+                                <option value="ja">Japanese</option>
+                                <option value="ko">Korean</option>
+                                <option value="ru">Russian</option>
+                                <option value="ar">Arabic</option>
+                                <option value="hi">Hindi</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="targetLang" class="form-label">Target Language</label>
+                            <select class="form-control" id="targetLang" name="targetLang">
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                                <option value="zh">Chinese</option>
+                                <option value="ja">Japanese</option>
+                                <option value="ko">Korean</option>
+                                <option value="ru">Russian</option>
+                                <option value="ar">Arabic</option>
+                                <option value="hi">Hindi</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" onclick="translateText()">Translate</button>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <h4 class="text-center">Translated Text:</h4>
+                    <div id="translatedText" class="alert alert-secondary text-center mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function translateText() {
+        var text = $("#text").val().trim();
+        var sourceLang = $("#sourceLang").val().trim();
+        var targetLang = $("#targetLang").val().trim();
+
+        if (text === "") {
+            $("#translatedText").html('<div class="alert alert-danger">Please enter text to translate.</div>');
+            return;
+        }
+
+        $.post("/translate", { text: text, sourceLang: sourceLang, targetLang: targetLang }, function(data) {
+            $("#translatedText").html('<div class="alert alert-success">' + data + '</div>');
+        }).fail(function() {
+            $("#translatedText").html('<div class="alert alert-danger">Translation failed. Try again.</div>');
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: aws-translate-spring-boot
+aws:
+  accessKeyId: <Access key>
+  secretAccessKey: <Secret access key>
+  region: us-east-1
